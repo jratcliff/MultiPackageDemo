@@ -2,7 +2,7 @@
  * This file launches the application.
  */
 Ext.application({
-    name: 'Demo',
+    name: "Demo",
 
     extend: 'Demo.Application',
 

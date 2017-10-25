@@ -5,7 +5,7 @@
     "indexHtmlPath": "index.html",
 
     "framework": "ext",
-    "toolkit": "modern",
+    "toolkit": "classic",
     "theme": "DemoTheme",
     
     "requires": [

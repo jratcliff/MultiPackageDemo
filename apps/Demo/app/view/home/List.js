@@ -2,7 +2,7 @@
  * This view is an example list of people.
  */
 Ext.define('Demo.view.home.List', {
-    extend: 'Ext.grid.Grid',
+    extend: 'Ext.grid.Panel',
     xtype: 'homelist',
     controller: 'homelist',
 

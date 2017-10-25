@@ -4,6 +4,7 @@ Ext.define('Demo.model.users.Store', {
 
     data: [
         {
+            id: 1,
             name: 'Jessica Warren',
             email: 'jessica.warren@acme.ccm',
             phone: '555-111-1111',
@@ -11,6 +12,7 @@ Ext.define('Demo.model.users.Store', {
         },
 
         {
+            id: 2,
             name: 'Donald Brown',
             email: 'donald.brown@acme.com',
             phone: '555-222-2222',
@@ -18,6 +20,7 @@ Ext.define('Demo.model.users.Store', {
         },
 
         {
+            id: 3,
             name: 'Lucy Moon',
             email: 'lucy.moon@acme.com',
             phone: '555-333-3333',
@@ -25,6 +28,7 @@ Ext.define('Demo.model.users.Store', {
         },
 
         {
+            id: 4,
             name: 'Jim Sanchez',
             email: 'jim.sanchez@acme.com',
             phone: '555-444-4444',
@@ -32,6 +36,7 @@ Ext.define('Demo.model.users.Store', {
         },
 
         {
+            id: 5,
             name: 'Marion Williams',
             email: 'marion.williams@acme.com',
             phone: '555-454-3241',

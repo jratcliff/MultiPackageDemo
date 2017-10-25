@@ -8,8 +8,11 @@ Ext.define('Demo.view.main.Main', {
 
     requires: [
         'Ext.layout.Fit',
-        'Ext.MessageBox'
+        'Ext.window.MessageBox',
+        'Ext.plugin.Viewport'
     ],
+
+    plugins: 'viewport',
 
     tabBarPosition: 'bottom',
 
@@ -33,7 +36,11 @@ Ext.define('Demo.view.main.Main', {
         iconCls: 'x-fa fa-user',
         reference: 'users',
         package: 'Users',
-        view: 'usersmain'
+        view: 'usersmain',
+        tab: {
+            iconAlign: 'top',
+            closable: true
+        }
     }, {
         title: 'Dashboard',
         iconCls: 'x-fa fa-users',
@@ -49,6 +56,6 @@ Ext.define('Demo.view.main.Main', {
     }],
 
     listeners: {
-        activeitemchange: 'onItemActivate'
+        tabchange: 'onItemActivate'
     }
 });

@@ -14,6 +14,13 @@ Ext.define('Demo.view.main.MainController', {
         ':type': {
             before: 'loadPackage',
             action: 'showView'
+        },
+        ':type/:wildcard': {
+            before: 'loadPackage',
+            action: 'showView',
+            conditions: {
+                ':wildcard': '(.*)'
+            }
         }
     },
 
@@ -22,8 +29,13 @@ Ext.define('Demo.view.main.MainController', {
      * create the proper view, we need to be sure the package that provides it is
      * loaded.
      */
-    loadPackage: function (type, action) {
-        var tabpanel = this.getView(),
+    loadPackage: function () {
+        var args = Ext.Array.slice(arguments),
+            type = args.shift(), // always first
+            action = args.pop(), // always last
+            wildcard = args[0], // what is left
+            token = wildcard ? type + '/' + wildcard : type,
+            tabpanel = this.getView(),
             tab = this.lookup(type),
             pkg = tab.package;
 
@@ -35,13 +47,15 @@ Ext.define('Demo.view.main.MainController', {
                 message: 'Loading Package...'
             });
 
-            Ext.defer(function () {  // so we can see the loading mask...
+            Ext.defer(function (token) {  // so we can see the loading mask...
                 Ext.Package.load(pkg).then(function () {
                     tabpanel.setMasked(null);
-
                     action.resume();
+
+                    // manually call doRun passing the original token.  this will allow the new routes defined in the newly loaded package to now be examined for this token and run if a match.
+                    Ext.route.Router.doRun([token]);
                 });
-            }, 500);
+            }, 500, this, [token]);
         }
     },
 
@@ -64,7 +78,11 @@ Ext.define('Demo.view.main.MainController', {
         }
     },
 
-    onItemActivate: function(tabpanel, tab) {
-        this.redirectTo(tab.reference);
+    onItemActivate: function (tabpanel, tab) {
+        var curTopLevelHash = Ext.util.History.hash.split('/').shift();
+
+        if (curTopLevelHash !== tab.reference) {
+            this.redirectTo(tab.reference);
+        }
     }
 });

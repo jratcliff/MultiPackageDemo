@@ -2,44 +2,81 @@
  * This view is an example list of people.
  */
 Ext.define('Demo.users.Main', {
-    extend: 'Ext.grid.Grid',
+    extend: 'Ext.panel.Panel',
     xtype: 'usersmain',
+
+    requires: [
+        'Ext.grid.Panel',
+        'Ext.tab.Panel',
+        'Ext.grid.column.Template',
+        'Demo.users.UserForm'
+    ],
+
     controller: 'usersmain',
 
     title: 'Users',
 
-    store: {
-        type: 'users'
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
     },
 
-    columns: [{
-        text: 'Name',
-        flex: 1,
+    defaults: {
+        flex: 1
+    },
 
-        cell: {
-            encodeHtml: false  // our tpl produced HTML (carefully)
+    items: [
+        // grid
+        {
+            xtype: 'grid',
+            reference: 'usersGrid',
+            store: {
+                type: 'users'
+            },
+
+            columns: [{
+                xtype: 'templatecolumn',
+                text: 'Name',
+                flex: 1,
+                tpl:
+                '<img class="demo-users-avatar" src="{avatar:resource("<@Users>avatars/")}">' +
+                // The name field could be malicious so encode it
+                '<div class="demo-user-bio">{name}</div>'
+
+            }, {
+                text: 'Email',
+                dataIndex: 'email',
+                flex: 1,
+
+                cell: {
+                    userCls: 'demo-users-cell'
+                }
+            }, {
+                text: 'Phone',
+                dataIndex: 'phone',
+                width: 150
+            }],
+
+            listeners: {
+                select: 'onItemSelected',
+                itemdblclick: 'onItemDblClick'
+            }
         },
-
-        tpl:
-            '<img class="demo-users-avatar" src="{avatar:resource("<@Users>avatars/")}">' +
-            // The name field could be malicious so encode it
-            '<div class="demo-user-bio">{name:htmlEncode}</div>'
-
-    }, {
-        text: 'Email',
-        dataIndex: 'email',
-        flex: 1,
-
-        cell: {
-            userCls: 'demo-users-cell'
+        // currently selected user
+        {
+            xtype: 'users-userform',
+            reference: 'selectedUser',
+            bind: {
+                title: 'Selected User: {usersGrid.selection.name}',
+                hidden: '{!usersGrid.selection}'
+            }
+        },
+        // all opened users
+        {
+            xtype: 'tabpanel',
+            reference: 'userDetailTabPanel'
         }
-    }, {
-        text: 'Phone',
-        dataIndex: 'phone',
-        width: 150
-    }],
+    ]
 
-    listeners: {
-        select: 'onItemSelected'
-    }
+
 });

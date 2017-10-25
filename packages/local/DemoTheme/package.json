@@ -4,7 +4,7 @@
     "sencha": {
         "namespace": "Ext",
         "type": "theme",
-        "extend": "theme-material",
+        "extend": "theme-triton",
 
         "requires": [],
 
@@ -14,7 +14,7 @@
         "local": true,
 
         "framework": "ext",
-        "toolkit": "modern",
+        "toolkit": "classic",
 
         "slicer": null,
 
